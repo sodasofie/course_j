@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-
+//обробка HTTP-запитів, приймають їх, оброб та поверт відпов @GetMapping @PutMapping @PostMapping
 @RestController
 @RequestMapping("/api/users")
 public class UsersController {
