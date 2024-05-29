@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UsersRepository extends JpaRepository<Users, Long> {
-    // Додайте додаткові методи для специфічних операцій з базою даних, якщо потрібно
+    // додаткові методи для специфічних операцій з базою даних, якщо потрібно
 }
