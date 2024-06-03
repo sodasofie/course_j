@@ -1,11 +1,8 @@
 package com.example.course_java.controller;
 
-
 import com.example.course_java.domain.Gyms;
 import com.example.course_java.repository.GymsRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,6 +18,27 @@ public class GymsController {
     @GetMapping("/")
     public List<Gyms> getAllGyms() {
         return gymsRepository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Gyms getGymsById(@PathVariable Long id) {
+        return gymsRepository.findById(id).orElse(null);
+    }
+
+    @PostMapping("/")
+    public Gyms createGyms(@RequestBody Gyms gyms) {
+        return gymsRepository.save(gyms);
+    }
+
+    @PutMapping("/{id}")
+    public Gyms updateGyms(@PathVariable Long id, @RequestBody Gyms gyms) {
+        gyms.setId(id);
+        return gymsRepository.save(gyms);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteGyms(@PathVariable Long id) {
+        gymsRepository.deleteById(id);
     }
 }
 
