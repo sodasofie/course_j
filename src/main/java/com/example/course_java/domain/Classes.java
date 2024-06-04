@@ -1,7 +1,6 @@
 package com.example.course_java.domain;
 
-import jakarta.persistence.*;
-
+import javax.persistence.*;
 import java.time.Duration;
 @Entity
 public class Classes {
