@@ -1,44 +1,53 @@
 package com.example.course_java.controller;
 
 import com.example.course_java.domain.Classes;
+import com.example.course_java.domain.Classes;
 import com.example.course_java.repository.ClassesRepository;
+import com.example.course_java.service.ClassesService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/classes")
 public class ClassesController {
+    @Autowired
+    private ClassesService classesService;
 
-    private final ClassesRepository classesRepository;
-
-    public ClassesController(ClassesRepository classesRepository) {
-        this.classesRepository = classesRepository;
-    }
-
-    @GetMapping("/")
+    @GetMapping
     public List<Classes> getAllClasses() {
-        return classesRepository.findAll();
+        return classesService.getAllClasses();
     }
 
     @GetMapping("/{id}")
-    public Classes getClassesById(@PathVariable Long id) {
-        return classesRepository.findById(id).orElse(null);
+    public ResponseEntity<Classes> getClassesById(@PathVariable Long id) {
+        Optional<Classes> classs = classesService.getClassesById(id);
+        return classs.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/")
+    @PostMapping
     public Classes createClasses(@RequestBody Classes classes) {
-        return classesRepository.save(classes);
+        return classesService.createClasses(classes);
     }
 
     @PutMapping("/{id}")
-    public Classes updateClasses(@PathVariable Long id, @RequestBody Classes classes) {
-        classes.setId(id);
-        return classesRepository.save(classes);
+    public ResponseEntity<Classes> updateClasses(@PathVariable Long id, @RequestBody Classes classes) {
+        if (classesService.getClassesById(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        classes.setId(id); // Ensure the id is set
+        return ResponseEntity.ok(classesService.updateClasses(classes));
     }
 
     @DeleteMapping("/{id}")
-    public void deleteClasses(@PathVariable Long id) {
-        classesRepository.deleteById(id);
+    public ResponseEntity<Void> deleteClasses(@PathVariable Long id) {
+        if (classesService.getClassesById(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        classesService.deleteClasses(id);
+        return ResponseEntity.noContent().build();
     }
 }

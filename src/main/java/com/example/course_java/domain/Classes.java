@@ -1,7 +1,6 @@
 package com.example.course_java.domain;
 
 import javax.persistence.*;
-import java.time.Duration;
 @Entity
 public class Classes {
     @Id
@@ -9,7 +8,7 @@ public class Classes {
     private Long id;
     private String name;
     private String surname;
-    private Duration duration;
+    private Integer duration;
 
     @ManyToOne
     @JoinColumn(name = "trainers_id", referencedColumnName = "id")
@@ -42,11 +41,11 @@ public class Classes {
         this.surname = surname;
     }
 
-    public Duration getDuration() {
+    public Integer getDuration() {
         return duration;
     }
 
-    public void setDuration(Duration duration) {
+    public void setDuration(Integer duration) {
         this.duration = duration;
     }
 

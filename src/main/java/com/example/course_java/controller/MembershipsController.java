@@ -1,43 +1,51 @@
 package com.example.course_java.controller;
 
 import com.example.course_java.domain.Memberships;
-import com.example.course_java.repository.MembershipsRepository;
+import com.example.course_java.service.MembershipsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/memberships")
 public class MembershipsController {
-    private final MembershipsRepository membershipsRepository;
+    @Autowired
+    private MembershipsService membershipsService;
 
-    public MembershipsController(MembershipsRepository membershipsRepository) {
-        this.membershipsRepository = membershipsRepository;
-    }
-
-    @GetMapping("/")
+    @GetMapping
     public List<Memberships> getAllMemberships() {
-        return membershipsRepository.findAll();
+        return membershipsService.getAllMemberships();
     }
 
     @GetMapping("/{id}")
-    public Memberships getMembershipsById(@PathVariable Long id) {
-        return membershipsRepository.findById(id).orElse(null);
+    public ResponseEntity<Memberships> getMembershipsById(@PathVariable Long id) {
+        Optional<Memberships> membership = membershipsService.getMembershipsById(id);
+        return membership.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/")
+    @PostMapping
     public Memberships createMemberships(@RequestBody Memberships memberships) {
-        return membershipsRepository.save(memberships);
+        return membershipsService.createMemberships(memberships);
     }
 
     @PutMapping("/{id}")
-    public Memberships updateMemberships(@PathVariable Long id, @RequestBody Memberships memberships) {
-        memberships.setId(id);
-        return membershipsRepository.save(memberships);
+    public ResponseEntity<Memberships> updateMemberships(@PathVariable Long id, @RequestBody Memberships memberships) {
+        if (membershipsService.getMembershipsById(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        memberships.setId(id); // Ensure the id is set
+        return ResponseEntity.ok(membershipsService.updateMemberships(memberships));
     }
 
     @DeleteMapping("/{id}")
-    public void deleteMemberships(@PathVariable Long id) {
-        membershipsRepository.deleteById(id);
+    public ResponseEntity<Void> deleteMemberships(@PathVariable Long id) {
+        if (membershipsService.getMembershipsById(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        membershipsService.deleteMemberships(id);
+        return ResponseEntity.noContent().build();
     }
 }

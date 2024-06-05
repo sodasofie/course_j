@@ -1,44 +1,51 @@
 package com.example.course_java.controller;
 
 import com.example.course_java.domain.Schedule;
-import com.example.course_java.repository.ScheduleRepository;
+import com.example.course_java.service.ScheduleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/schedule")
 public class ScheduleController {
-    private final ScheduleRepository scheduleRepository;
+    @Autowired
+    private ScheduleService scheduleService;
 
-    public ScheduleController(ScheduleRepository scheduleRepository) {
-        this.scheduleRepository = scheduleRepository;
-    }
-
-    @GetMapping("/")
+    @GetMapping
     public List<Schedule> getAllSchedule() {
-        return scheduleRepository.findAll();
+        return scheduleService.getAllSchedule();
     }
 
     @GetMapping("/{id}")
-    public Schedule getScheduleById(@PathVariable Long id) {
-        return scheduleRepository.findById(id).orElse(null);
+    public ResponseEntity<Schedule> getScheduleById(@PathVariable Long id) {
+        Optional<Schedule> schedule = scheduleService.getScheduleById(id);
+        return schedule.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/")
+    @PostMapping
     public Schedule createSchedule(@RequestBody Schedule schedule) {
-        return scheduleRepository.save(schedule);
+        return scheduleService.createSchedule(schedule);
     }
 
     @PutMapping("/{id}")
-    public Schedule updateSchedule(@PathVariable Long id, @RequestBody Schedule schedule) {
-        schedule.setId(id);
-        return scheduleRepository.save(schedule);
+    public ResponseEntity<Schedule> updateSchedule(@PathVariable Long id, @RequestBody Schedule schedule) {
+        if (scheduleService.getScheduleById(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        schedule.setId(id); // Ensure the id is set
+        return ResponseEntity.ok(scheduleService.updateSchedule(schedule));
     }
 
     @DeleteMapping("/{id}")
-    public void deleteSchedule(@PathVariable Long id) {
-        scheduleRepository.deleteById(id);
+    public ResponseEntity<Void> deleteSchedule(@PathVariable Long id) {
+        if (scheduleService.getScheduleById(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        scheduleService.deleteSchedule(id);
+        return ResponseEntity.noContent().build();
     }
-
 }
