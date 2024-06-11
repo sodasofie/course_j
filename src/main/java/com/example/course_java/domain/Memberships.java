@@ -16,6 +16,7 @@ public class Memberships {
     private LocalDate start_date;
     private LocalDate end_date;
 
+
     @ManyToOne
     @JoinColumn(name = "users_id", referencedColumnName = "id")
     private Users users;
