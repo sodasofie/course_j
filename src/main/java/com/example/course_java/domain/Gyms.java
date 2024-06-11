@@ -30,7 +30,6 @@ public class Gyms {
         this.address = address;
     }
 
-
     public Long getId() {
         return id;
     }

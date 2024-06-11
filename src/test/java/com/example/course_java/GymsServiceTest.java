@@ -81,4 +81,5 @@ public class GymsServiceTest {
 
         verify(gymsRepositoryMock, times(1)).deleteById(gymId);
     }
+
 }
