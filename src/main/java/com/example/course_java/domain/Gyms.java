@@ -30,7 +30,6 @@ public class Gyms {
         this.address = address;
     }
 
-
     public Long getId() {
         return id;
     }
@@ -62,4 +61,5 @@ public class Gyms {
     public void setAddress(String address) {
         this.address = address;
     }
+
 }

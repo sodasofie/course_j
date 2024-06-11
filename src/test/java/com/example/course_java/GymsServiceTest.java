@@ -27,8 +27,8 @@ public class GymsServiceTest {
     @Test
     public void testGetAllGyms() {
         List<Gyms> expectedGyms = new ArrayList<>();
-        expectedGyms.add(new Gyms(1L, "Gym One", "123 Main St"));
-        expectedGyms.add(new Gyms(2L, "Gym Two", "456 Elm St"));
+        expectedGyms.add(new Gyms(1L, "Південний", "вул. Південнна 1"));
+        expectedGyms.add(new Gyms(2L, "Східний", "просп. Східний 2А"));
         when(gymsRepositoryMock.findAll()).thenReturn(expectedGyms);
 
         List<Gyms> actualGyms = gymsService.getAllGyms();
@@ -41,7 +41,7 @@ public class GymsServiceTest {
 
     @Test
     public void testGetGymById() {
-        Gyms expectedGym = new Gyms(1L, "Gym One", "123 Main St");
+        Gyms expectedGym = new Gyms(1L, "Південний", "вул. Південнна 1");
         when(gymsRepositoryMock.findById(1L)).thenReturn(Optional.of(expectedGym));
 
         Optional<Gyms> actualGym = gymsService.getGymsById(1L);
@@ -52,8 +52,8 @@ public class GymsServiceTest {
 
     @Test
     public void testCreateGym() {
-        Gyms newGym = new Gyms(null, "Gym Three", "789 Oak St");
-        Gyms savedGym = new Gyms(1L, "Gym Three", "789 Oak St");
+        Gyms newGym = new Gyms(null, "Північний", "бул. Північний 3");
+        Gyms savedGym = new Gyms(1L, "Північний", "бул. Північний 3");
         when(gymsRepositoryMock.save(newGym)).thenReturn(savedGym);
 
         Gyms createdGym = gymsService.createGyms(newGym);
@@ -63,8 +63,8 @@ public class GymsServiceTest {
 
     @Test
     public void testUpdateGym() {
-        Gyms existingGym = new Gyms(1L, "Gym Three", "789 Oak St");
-        Gyms updatedGym = new Gyms(1L, "Gym Three Updated", "789 Oak St");
+        Gyms existingGym = new Gyms(1L, "Північний", "бул. Північний 3");
+        Gyms updatedGym = new Gyms(1L, "Північний Updated", "бул. Північний 3");
         when(gymsRepositoryMock.save(existingGym)).thenReturn(updatedGym);
 
         Gyms result = gymsService.updateGyms(existingGym);
@@ -81,4 +81,5 @@ public class GymsServiceTest {
 
         verify(gymsRepositoryMock, times(1)).deleteById(gymId);
     }
+
 }
