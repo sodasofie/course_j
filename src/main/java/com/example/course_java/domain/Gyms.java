@@ -14,6 +14,23 @@ public class Gyms {
     private String description;
     private String address;
 
+    public Gyms() {
+    }
+
+    public Gyms(Long id, String name, String description, String address) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.address = address;
+    }
+
+    public Gyms(Long id, String name, String address) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+    }
+
+
     public Long getId() {
         return id;
     }
