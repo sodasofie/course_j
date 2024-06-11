@@ -21,6 +21,30 @@ public class Users {
     private String password;
     private LocalDate register_date;
 
+    public Users() {
+    }
+
+    public Users(Long id, String name, String surname, String lastname, LocalDate birthday, String email, String phone, String password, LocalDate register_date) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.lastname = lastname;
+        this.birthday = birthday;
+        this.email = email;
+        this.phone = phone;
+        this.password = password;
+        this.register_date = register_date;
+    }
+
+
+    public Users(Long id, String name, String surname, String email) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+    }
+
+
     public Long getId() {
         return id;
     }

@@ -1,6 +1,7 @@
 package com.example.course_java.service;
 import com.example.course_java.domain.Memberships;
 import com.example.course_java.repository.MembershipsRepository;
+import com.example.course_java.repository.MembershipsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -8,8 +9,12 @@ import java.util.Optional;
 
 @Service
 public class MembershipsService {
+    private final MembershipsRepository membershipsRepository;
     @Autowired
-    private MembershipsRepository membershipsRepository;
+    public MembershipsService(MembershipsRepository membershipsRepository) {
+        this.membershipsRepository = membershipsRepository;
+    }
+
 
     public List<Memberships> getAllMemberships() {
         return membershipsRepository.findAll();
