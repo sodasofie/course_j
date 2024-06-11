@@ -20,6 +20,27 @@ public class Memberships {
     @JoinColumn(name = "users_id", referencedColumnName = "id")
     private Users users;
 
+    public Memberships() {
+    }
+
+    public Memberships(Long id, String name, String description, BigDecimal price, LocalDate start_date, LocalDate end_date, Users users) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.start_date = start_date;
+        this.end_date = end_date;
+        this.users = users;
+    }
+
+    public Memberships(Long id, String name, String description, BigDecimal price) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
+
+
     public Long getId() {
         return id;
     }

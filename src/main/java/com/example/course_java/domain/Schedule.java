@@ -19,6 +19,23 @@ public class Schedule {
     @JoinColumn(name = "memberships_id", referencedColumnName = "id")
     private Memberships memberships;
 
+    public Schedule() {
+    }
+
+    public Schedule(Long id, LocalDateTime start_datetime, LocalDateTime end_datetime, Classes classes, Memberships memberships) {
+        this.id = id;
+        this.start_datetime = start_datetime;
+        this.end_datetime = end_datetime;
+        this.classes = classes;
+        this.memberships = memberships;
+    }
+
+    public Schedule(Long id, LocalDateTime start_datetime, LocalDateTime end_datetime) {
+        this.id = id;
+        this.start_datetime = start_datetime;
+        this.end_datetime = end_datetime;
+    }
+
     public Long getId() {
         return id;
     }

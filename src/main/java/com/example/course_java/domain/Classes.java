@@ -7,7 +7,7 @@ public class Classes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String surname;
+    private String description;
     private Integer duration;
 
     @ManyToOne
@@ -16,6 +16,24 @@ public class Classes {
     @ManyToOne
     @JoinColumn(name = "gyms_id", referencedColumnName = "id")
     private Gyms gyms;
+
+    public Classes() {
+    }
+
+    public Classes(Long id, String name, String description, Integer duration, Trainers trainers, Gyms gyms) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.duration = duration;
+        this.trainers = trainers;
+        this.gyms = gyms;
+    }
+
+    public Classes(Long id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
 
     public Long getId() {
         return id;
@@ -34,11 +52,11 @@ public class Classes {
     }
 
     public String getSurname() {
-        return surname;
+        return description;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setSurname(String description) {
+        this.description = description;
     }
 
     public Integer getDuration() {

@@ -23,6 +23,29 @@ public class Trainers {
     private String password;
     private LocalDate employment_date;
 
+    public Trainers() {
+    }
+
+    public Trainers(Long id, String name, String surname, String lastname, String specialization, LocalDate birthday, String email, String phone, String password, LocalDate employment_date) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.lastname = lastname;
+        this.specialization = specialization;
+        this.birthday = birthday;
+        this.email = email;
+        this.phone = phone;
+        this.password = password;
+        this.employment_date = employment_date;
+    }
+
+    public Trainers(Long id, String name, String lastname, String specialization) {
+        this.id = id;
+        this.name = name;
+        this.lastname = lastname;
+        this.specialization = specialization;
+    }
+
     public Long getId() {
         return id;
     }

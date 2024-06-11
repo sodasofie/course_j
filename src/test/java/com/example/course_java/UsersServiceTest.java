@@ -43,7 +43,7 @@ public class UsersServiceTest {
 
     @Test
     public void testGetUsersById() {
-        Users expectedUser = new Users(1L, "John", "Doe", "john@example.com");
+        Users expectedUser = new Users(1L, "Катя", "Жовта", "kate@gmail.com");
         when(usersRepositoryMock.findById(1L)).thenReturn(Optional.of(expectedUser));
 
         Optional<Users> actualUser = usersService.getUsersById(1L);
@@ -54,9 +54,8 @@ public class UsersServiceTest {
 
     @Test
     public void testCreateUsers() {
-
-        Users newUser = new Users(null, "Alice", "Smith", "alice@example.com");
-        Users savedUser = new Users(1L, "Alice", "Smith", "alice@example.com");
+        Users newUser = new Users(null, "Анна", "Зелена", "ann3@gmail.com");
+        Users savedUser = new Users(1L, "Анна", "Зелена", "ann3@gmail.com");
         when(usersRepositoryMock.save(newUser)).thenReturn(savedUser);
 
         Users createdUser = usersService.createUsers(newUser);
@@ -67,8 +66,8 @@ public class UsersServiceTest {
     @Test
     public void testUpdateUsers() {
 
-        Users existingUser = new Users(1L, "Alice", "Smith", "Smith", LocalDate.of(1993, 3, 3), "alice@example.com", "111222333", "password", LocalDate.now());
-        Users updatedUser = new Users(1L, "Alice", "Johnson", "Smith", LocalDate.of(1993, 3, 3), "alice@example.com", "111222333", "password", LocalDate.now());
+        Users existingUser = new Users(1L, "Анна", "Зелена", "Андріївна", LocalDate.of(1993, 3, 3), "ann3@gmail.com", "0673331122", "iamAnn33", LocalDate.now());
+        Users updatedUser = new Users(1L, "Анна", "Зелена", "Андріївна", LocalDate.of(1993, 3, 3), "ann3@gmail.com", "0673331122", "iamAnn33", LocalDate.now());
         when(usersRepositoryMock.save(existingUser)).thenReturn(updatedUser);
 
         Users result = usersService.updateUsers(existingUser);
