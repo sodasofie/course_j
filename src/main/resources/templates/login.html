@@ -1,22 +1,78 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <style>
+            body{
+        font-family: "Trebuchet MS";
+        }
+            #block{
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 50px;
+        padding: 10px;
+        border: 2px dashed #a9bfcf;
+        width: 300px;
+        height: 300px;
+        background-color: #e9f1f7;
+        text-align: center;
+        font-style: Courier New;
+        }
+            h2{
+        color: #263b4a;
+        }
+            a{
+        color: #2e82bf;
+        }
+            a:hover{
+        color: #43b2e6;
+        }
+            a:active{
+        color: #8f73ff;
+        }
+            button{
+        transition-duration: 0.15s;
+        border: 2px solid #92b7d1;
+        border-radius: 4px;
+        color: black;
+        background-color: #ccddeb;
+        padding: 8px 20px;
+        font-size: 16px;
+        margin-top: 20px;
+        }
+            button:hover{
+        background-color: #92b7d1;
+        color:white;
+        }
+            button:active{
+        background-color: #8f73ff;
+        border-color: #8f73ff;
+        }
+            #login{
+        margin-right: 12px;
+        }
+    </style>
 </head>
 <body>
-<h1>Login</h1>
+<div id="block">
+<h2>Ввійти</h2>
 <form th:action="@{/login}" method="post">
     <div>
-        <label>Username:</label>
+        <label id="login">Логін:</label>
         <input type="text" name="username"/>
     </div>
     <div>
-        <label>Password:</label>
+        <label>Пароль:</label>
         <input type="password" name="password"/>
     </div>
     <div>
-        <button type="submit">Login</button>
+        <button type="submit">Вхід</button>
     </div>
 </form>
+<h2>Або</h2>
+<a href="/oauth2/authorization/github">Ввійти за допомогою GitHub</a>
+</div>
 </body>
 </html>
