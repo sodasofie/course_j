@@ -1,4 +1,4 @@
-package com.example.course_java;
+package com.example.course_java.web_controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
