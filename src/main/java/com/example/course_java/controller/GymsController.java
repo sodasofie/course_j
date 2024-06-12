@@ -36,7 +36,7 @@ public class GymsController {
         if (gymsService.getGymsById(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        gyms.setId(id); // Ensure the id is set
+        gyms.setId(id);
         return ResponseEntity.ok(gymsService.updateGyms(gyms));
     }
 

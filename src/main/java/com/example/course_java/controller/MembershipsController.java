@@ -36,7 +36,7 @@ public class MembershipsController {
         if (membershipsService.getMembershipsById(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        memberships.setId(id); // Ensure the id is set
+        memberships.setId(id);
         return ResponseEntity.ok(membershipsService.updateMemberships(memberships));
     }
 

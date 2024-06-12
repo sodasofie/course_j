@@ -36,7 +36,7 @@ public class TrainersController {
         if (trainersService.getTrainersById(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        trainers.setId(id); // Ensure the id is set
+        trainers.setId(id);
         return ResponseEntity.ok(trainersService.updateTrainers(trainers));
     }
 

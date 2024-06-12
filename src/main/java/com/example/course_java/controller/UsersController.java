@@ -36,7 +36,7 @@ public class UsersController {
         if (usersService.getUsersById(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        users.setId(id); // Ensure the id is set
+        users.setId(id);
         return ResponseEntity.ok(usersService.updateUsers(users));
     }
 

@@ -44,7 +44,6 @@ public class Users {
         this.email = email;
     }
 
-
     public Long getId() {
         return id;
     }

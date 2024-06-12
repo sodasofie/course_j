@@ -93,7 +93,6 @@
 			<version>5.6.10.Final</version>
 		</dependency>
 
-		<!-- Додано залежність springdoc-openapi-ui -->
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>

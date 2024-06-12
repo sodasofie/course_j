@@ -25,7 +25,6 @@ public class MembershipsServiceTest {
         membershipsService = new MembershipsService(membershipsRepositoryMock);
     }
 
-    // Допоміжний метод для створення BigDecimal з double
     private BigDecimal bd(double value) {
         return BigDecimal.valueOf(value);
     }

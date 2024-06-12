@@ -36,7 +36,7 @@ public class ScheduleController {
         if (scheduleService.getScheduleById(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        schedule.setId(id); // Ensure the id is set
+        schedule.setId(id);
         return ResponseEntity.ok(scheduleService.updateSchedule(schedule));
     }
 

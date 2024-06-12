@@ -1,7 +1,6 @@
 package com.example.course_java.service;
 import com.example.course_java.domain.Memberships;
 import com.example.course_java.repository.MembershipsRepository;
-import com.example.course_java.repository.MembershipsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;

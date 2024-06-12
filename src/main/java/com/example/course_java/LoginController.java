@@ -7,6 +7,6 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login() {
-        return "login";  // Повертає шаблон login.html
+        return "login"; 
     }
 }

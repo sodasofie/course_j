@@ -1,7 +1,6 @@
 package com.example.course_java.service;
 import com.example.course_java.domain.Classes;
 import com.example.course_java.repository.ClassesRepository;
-import com.example.course_java.repository.ClassesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;

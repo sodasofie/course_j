@@ -1,8 +1,6 @@
 package com.example.course_java.controller;
 
 import com.example.course_java.domain.Classes;
-import com.example.course_java.domain.Classes;
-import com.example.course_java.repository.ClassesRepository;
 import com.example.course_java.service.ClassesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +36,7 @@ public class ClassesController {
         if (classesService.getClassesById(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        classes.setId(id); // Ensure the id is set
+        classes.setId(id);
         return ResponseEntity.ok(classesService.updateClasses(classes));
     }
 
