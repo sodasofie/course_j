@@ -29,7 +29,7 @@ public class ScheduleServiceTest {
     public void testGetAllSchedules() {
         List<Schedule> expectedSchedules = new ArrayList<>();
         expectedSchedules.add(new Schedule(1L, LocalDateTime.of(2024, 6, 1, 11, 0),LocalDateTime.of(2024, 6, 1, 12, 30)));
-        expectedSchedules.add(new Schedule(2L, LocalDateTime.of(2024, 6, 2, 12, 40),LocalDateTime.of(2024, 6, 1, 14, 0)));
+        expectedSchedules.add(new Schedule(2L, LocalDateTime.of(2024, 6, 2, 12, 40),LocalDateTime.of(2024, 6, 2, 14, 0)));
         when(scheduleRepositoryMock.findAll()).thenReturn(expectedSchedules);
 
         List<Schedule> actualSchedules = scheduleService.getAllSchedule();
