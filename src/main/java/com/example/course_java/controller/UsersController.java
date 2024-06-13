@@ -1,5 +1,7 @@
 package com.example.course_java.controller;
+
 import com.example.course_java.domain.Users;
+import com.example.course_java.dto.UsersDTO;
 import com.example.course_java.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -7,37 +9,47 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-//обробка HTTP-запитів, приймають їх, оброб та поверт відпов @GetMapping @PutMapping @PostMapping
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UsersController {
+
     @Autowired
     private UsersService usersService;
 
     @GetMapping
-    public List<Users> getAllUsers() {
-        return usersService.getAllUsers();
+    public List<UsersDTO> getAllUsers() {
+        List<Users> users = usersService.getAllUsers();
+        return users.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Users> getUsersById(@PathVariable Long id) {
-        Optional<Users> user = usersService.getUsersById(id);
-        return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<UsersDTO> getUsersById(@PathVariable Long id) {
+        Optional<Users> users = usersService.getUsersById(id);
+        return users.map(this::convertToDTO)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Users createUsers(@RequestBody Users users) {
-        return usersService.createUsers(users);
+    public UsersDTO createUsers(@RequestBody UsersDTO usersDTO) {
+        Users users = convertToEntity(usersDTO);
+        Users createdUsers = usersService.createUsers(users);
+        return convertToDTO(createdUsers);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Users> updateUsers(@PathVariable Long id, @RequestBody Users users) {
+    public ResponseEntity<UsersDTO> updateUsers(@PathVariable Long id, @RequestBody UsersDTO usersDTO) {
         if (usersService.getUsersById(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        users.setId(id);
-        return ResponseEntity.ok(usersService.updateUsers(users));
+        usersDTO.setId(id);
+        Users users = convertToEntity(usersDTO);
+        Users updatedUsers = usersService.updateUsers(users);
+        return ResponseEntity.ok(convertToDTO(updatedUsers));
     }
 
     @DeleteMapping("/{id}")
@@ -47,5 +59,34 @@ public class UsersController {
         }
         usersService.deleteUsers(id);
         return ResponseEntity.noContent().build();
+    }
+
+    private UsersDTO convertToDTO(Users users) {
+        return new UsersDTO(
+                users.getId(),
+                users.getName(),
+                users.getSurname(),
+                users.getLastname(),
+                users.getBirthday(),
+                users.getEmail(),
+                users.getPhone(),
+                users.getPassword(),
+                users.getRegister_date()
+        );
+    }
+
+    private Users convertToEntity(UsersDTO usersDTO) {
+        Users users = new Users();
+        users.setId(usersDTO.getId());
+        users.setName(usersDTO.getName());
+        users.setSurname(usersDTO.getSurname());
+        users.setLastname(usersDTO.getLastname());
+        users.setBirthday(usersDTO.getBirthday());
+        users.setEmail(usersDTO.getEmail());
+        users.setPhone(usersDTO.getPhone());
+        users.setPassword(usersDTO.getPassword());
+        users.setRegister_date(usersDTO.getRegister_date());
+
+        return users;
     }
 }

@@ -51,11 +51,11 @@ public class Classes {
         this.name = name;
     }
 
-    public String getSurname() {
+    public String getDescription() {
         return description;
     }
 
-    public void setSurname(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 

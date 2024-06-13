@@ -1,0 +1,87 @@
+package com.example.course_java.dto;
+
+import com.example.course_java.domain.Users;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+public class MembershipsDTO {
+    private Long id;
+    private String name;
+    private String description;
+    private BigDecimal price;
+    private LocalDate start_date;
+    private LocalDate end_date;
+    private Long users_id;
+
+    public MembershipsDTO() {
+    }
+
+    public MembershipsDTO(Long id, String name, String description, BigDecimal price, LocalDate start_date, LocalDate end_date, Long users_id) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.start_date = start_date;
+        this.end_date = end_date;
+        this.users_id = users_id;
+    }
+
+    // Getters and setters
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public LocalDate getStart_date() {
+        return start_date;
+    }
+
+    public void setStart_date(LocalDate start_date) {
+        this.start_date = start_date;
+    }
+
+    public LocalDate getEnd_date() {
+        return end_date;
+    }
+
+    public void setEnd_date(LocalDate end_date) {
+        this.end_date = end_date;
+    }
+
+    public Long getUsers_id() {
+        return users_id;
+    }
+
+    public void setUsers_id(Long users_id) {
+        this.users_id = users_id;
+    }
+}
