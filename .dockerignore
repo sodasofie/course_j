@@ -1,9 +1,0 @@
-target/
-!.mvn/wrapper/maven-wrapper.jar
-**/.*
-!.dockerignore
-!.mvn/wrapper/maven-wrapper.properties
-pom.xml
-*.class
-*.log
-.idea/
