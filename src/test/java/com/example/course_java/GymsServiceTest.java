@@ -52,7 +52,7 @@ public class GymsServiceTest {
 
     @Test
     public void testCreateGym() {
-        Gyms newGym = new Gyms(null, "Південий", "бул. Південна 3/А");
+        Gyms newGym = new Gyms((Long) null, "Південий", "бул. Південна 3/А");
         Gyms savedGym = new Gyms(1L, "Південий", "бул. Південна 3/А");
         when(gymsRepositoryMock.save(newGym)).thenReturn(savedGym);
 

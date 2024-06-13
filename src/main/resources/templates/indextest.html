@@ -1,9 +1,227 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="uk">
+<html lang="en">
 <head>
-    <title>Index Test</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Управління спортзалами</title>
+    <style>
+        body{
+        font-family: "Trebuchet MS";
+        color: #263b4a;
+        }
+        .light{
+         background-color: #e9f1f7;
+         padding: 16px ;
+        }
+        .lightsmall{
+        border: 4px solid #e1e9f0;
+        background-color: #e1e9f0;
+        border-radius: 4px;
+        padding-left: 10px; padding-right: 10px;
+        width: 350px;
+        }
+        .button{
+        background-color: #263b4a;
+        color: white;
+        font-weight: 500;
+        }
+        .dark{
+         background-color: #e9f1f7;
+         padding: 16px ;
+        }
+        .darksmall{
+        border: 4px solid #e1e9f0;
+        background-color: #e1e9f0;
+        border-radius: 4px;
+        padding-left: 10px; padding-right: 10px;
+        width: 350px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+        th {
+            background-color: #d3e0eb;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
-<h1>Вітаю!</h1>
+<h1>Управління спортзалами</h1>
+<div class="light">
+<h2>Список спортзалів</h2>
+<table id="gymsTable">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Назва</th>
+        <th>Опис</th>
+        <th>Адреса</th>
+        <th>Дії</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Дані будуть заповнені динамічно через JavaScript -->
+    </tbody>
+</table>
+
+    <div class="lightsmall">
+<h2>Додати новий спортзал</h2>
+<form id="addGymForm">
+    <label for="gymName">Назва:</label>
+    <input type="text" id="gymName" name="gymName" required><br><br>
+
+    <label for="gymDescription">Опис:</label>
+    <input type="text" id="gymDescription" name="gymDescription" required><br><br>
+
+    <label for="gymAddress">Адреса:</label>
+    <input type="text" id="gymAddress" name="gymAddress" required><br><br>
+
+    <button class="button" type="submit">Додати спортзал</button>
+</form>
+    </div>
+
+<!-- JavaScript для отримання і відображення даних -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const gymsTable = document.getElementById('gymsTable');
+        const addGymForm = document.getElementById('addGymForm');
+
+        // Отримання даних про спортзали з сервера і заповнення таблиці
+        function fetchGyms() {
+            fetch('/api/gyms')
+                .then(response => response.json())
+                .then(data => {
+                    const tbody = gymsTable.querySelector('tbody');
+                    tbody.innerHTML = ''; // Очистити таблицю перед оновленням
+
+                    data.forEach(gym => {
+                        const tr = document.createElement('tr');
+                        tr.setAttribute('data-id', gym.id);
+                        tr.innerHTML = `
+                            <td>${gym.id}</td>
+                            <td>${gym.name}</td>
+                            <td>${gym.description}</td>
+                            <td>${gym.address}</td>
+                            <td>
+                                <button class="button" onclick="editGym(${gym.id})">Редагувати</button>
+                                <button class="button" onclick="deleteGym(${gym.id})">Видалити</button>
+                            </td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                })
+                .catch(error => console.error('Помилка під час отримання даних про спортзали:', error));
+        }
+
+        // Відправлення форми для додавання нового спортзалу
+        addGymForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            const newGym = {
+                name: formData.get('gymName'),
+                description: formData.get('gymDescription'),
+                address: formData.get('gymAddress')
+            };
+
+            fetch('/api/gyms', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newGym)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Спортзал успішно додано!');
+                    fetchGyms(); // Оновлення списку спортзалів після додавання
+                    addGymForm.reset(); // Очистити форму після додавання
+                } else {
+                    throw new Error('Помилка під час додавання спортзалу');
+                }
+            })
+            .catch(error => console.error('Помилка під час відправлення форми:', error));
+        });
+
+        // Функція для редагування спортзалу
+        window.editGym = function(gymId) {
+            const tr = gymsTable.querySelector(`tr[data-id="${gymId}"]`);
+            const cells = tr.querySelectorAll('td');
+
+            const name = cells[1].textContent;
+            const description = cells[2].textContent;
+            const address = cells[3].textContent;
+
+            // Замінити дані в таблиці на форму редагування
+            cells[1].innerHTML = `<input type="text" value="${name}">`;
+            cells[2].innerHTML = `<input type="text" value="${description}">`;
+            cells[3].innerHTML = `<input type="text" value="${address}">`;
+
+            // Змінити кнопку "Редагувати" на "Зберегти"
+            cells[4].innerHTML = `<button onclick="saveGym(${gymId})">Зберегти</button>`;
+        }
+
+        // Функція для збереження змін після редагування
+        window.saveGym = function(gymId) {
+            const tr = gymsTable.querySelector(`tr[data-id="${gymId}"]`);
+            const cells = tr.querySelectorAll('td');
+
+            const updatedGym = {
+                id: gymId,
+                name: cells[1].querySelector('input').value,
+                description: cells[2].querySelector('input').value,
+                address: cells[3].querySelector('input').value
+            };
+
+            fetch(`/api/gyms/${gymId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updatedGym)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Зміни успішно збережено!');
+                    fetchGyms(); // Оновлення списку спортзалів після збереження
+                } else {
+                    throw new Error('Помилка під час збереження змін');
+                }
+            })
+            .catch(error => console.error('Помилка під час відправлення форми редагування:', error));
+        }
+
+        // Функція для видалення спортзалу
+        window.deleteGym = function(gymId) {
+            if (confirm('Ви впевнені, що хочете видалити цей спортзал?')) {
+                fetch(`/api/gyms/${gymId}`, {
+                    method: 'DELETE'
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Спортзал успішно видалено!');
+                        fetchGyms(); // Оновлення списку спортзалів після видалення
+                    } else {
+                        throw new Error('Помилка під час видалення спортзалу');
+                    }
+                })
+                .catch(error => console.error('Помилка під час видалення спортзалу:', error));
+            }
+        }
+
+        // Завантаження списку спортзалів при завантаженні сторінки
+        fetchGyms();
+    });
+</script>
+</div>
 </body>
 </html>

@@ -30,6 +30,9 @@ public class Gyms {
         this.address = address;
     }
 
+    public Gyms(String s, String name, String mail) {
+    }
+
     public Long getId() {
         return id;
     }
